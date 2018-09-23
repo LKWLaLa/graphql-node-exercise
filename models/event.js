@@ -8,7 +8,7 @@ const eventSchema = new Schema(
     description: String,
     organizationId: String
   },
-  { timestamps: { createdAt: 'createdAt' }
+  { timestamps: { createdAt: 'createdAt' }}
 );
 
 module.exports = mongoose.model('Event', eventSchema);

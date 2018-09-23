@@ -9,7 +9,7 @@ const locationSchema = new Schema(
     longitude: String,
     organizationId: String
   },
-  { timestamps: { createdAt: 'createdAt' }
+  { timestamps: { createdAt: 'createdAt' }}
 );
 
 module.exports = mongoose.model('Location', locationSchema);
