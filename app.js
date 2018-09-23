@@ -12,8 +12,8 @@ const seeds = require('./seeds')
 mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds111993.mlab.com:11993/graphql-node-exercise`)
 mongoose.connection.once('open', () => {
     console.log('connected to database');
-    seeds.clean()
-    seeds.populate()
+    // seeds.clean()
+    // seeds.populate()
 });
 
 app.use('/graphql', graphqlHTTP({

@@ -9,13 +9,13 @@ module.exports.clean = () => {
 }
 
 module.exports.populate = () => {
-  let collections = [
+  let organizations = [
     {name: '92nd St Y'},
     {name: 'Millneck Services'},
     {name: 'OM Factory'}
   ] 
-  
-  Organization.insertMany(collections)
+
+  Organization.insertMany(organizations)
   .then(res => {
     let org1 = res[0].id 
     let org2 = res[1].id 
