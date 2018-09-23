@@ -2,8 +2,7 @@ const graphql = require('graphql')
 const Organization = require('../models/Organization')
 const Location = require('../models/Location')
 const Event = require('../models/Event')
-const { EventType } = require('./eventSchema')
-const { LocationType } = require('./locationSchema')
+const {EventType, OrganizationType, LocationType} = require('./objectTypes')
 
 const {
     GraphQLObjectType,
@@ -11,28 +10,6 @@ const {
     GraphQLID,
     GraphQLList
 } = graphql;
-
-const OrganizationType = new GraphQLObjectType({
-    name: 'Organization',
-    fields: ( ) => ({
-        id: { type: GraphQLID },
-        name: { type: GraphQLString },
-        createdAt: { type: GraphQLString },
-        updatedAt: { type: GraphQLString },
-        events: {
-            type: new GraphQLList(EventType),
-            resolve(parent, args){
-                return Event.find({ organizationId: parent.id });
-            }
-        },
-        locations: {
-            type: new GraphQLList(LocationType),
-            resolve(parent, args){
-                return Location.find({ organizationId: parent.id });
-            } 
-        }   
-    })
-});
 
 const queryFields = { 
     organization: {
