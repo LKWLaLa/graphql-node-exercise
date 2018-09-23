@@ -1,4 +1,5 @@
 const graphql = require('graphql');
+const Organization = require('../models/Organization')
 
 const {
     GraphQLObjectType,
@@ -6,13 +7,6 @@ const {
     GraphQLSchema,
     GraphQLID
 } = graphql;
-
-// stubbed data (fake db)
-var organizations = [
-    { name: '92nd St Y', createdAt: '2018-09-12 18:39:29', updatedAt: '2018-09-12 18:39:29', id: '1' },
-    { name: 'Children\'s Aid Society', createdAt: '2018-09-12 18:39:29', updatedAt: '2018-09-12 18:39:29', id: '2' },
-    { name: 'Millneck Services', createdAt: '2018-09-12 18:39:29', updatedAt: '2018-09-12 18:39:29', id: '3' },
-];
 
 
 const OrganizationType = new GraphQLObjectType({
@@ -33,7 +27,7 @@ const RootQuery = new GraphQLObjectType({
             type: OrganizationType,
             args: { id: { type: GraphQLID } },
             resolve(parent, args){
-                return organizations.filter(org => args.id === org.id)[0]
+                return Organization.findById(args.id);
             }       
         }
     }
