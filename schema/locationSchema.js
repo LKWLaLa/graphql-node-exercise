@@ -2,6 +2,7 @@ const graphql = require('graphql');
 const Organization = require('../models/Organization')
 const Location = require('../models/Location')
 const Event = require('../models/Event')
+const { OrganizationType } = require('./organizationSchema')
 
 const {
     GraphQLObjectType,
@@ -23,7 +24,19 @@ const LocationType = new GraphQLObjectType({
 });
 
 const queryFields = { 
-   
+    location: {
+        type: LocationType,
+        args: { id: { type: GraphQLID } },
+        resolve(parent, args){
+            return Location.findById(args.id);
+        }       
+    },
+    locations: {
+        type: new GraphQLList(LocationType),
+        resolve(parent, args){
+            return Location.find({});
+        }       
+    }
 }
 
 
