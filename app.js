@@ -3,10 +3,7 @@ const express = require('express');
 const app = express();
 const graphqlHTTP = require('express-graphql');
 const mongoose = require('mongoose');
-const schema = require('./schema/schema');
-const Organization = require('./models/Organization')
-const Location = require('./models/Location')
-const Event = require('./models/Event')
+const schema = require('./schema/rootSchema');
 const seeds = require('./seeds')
 
 mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds111993.mlab.com:11993/graphql-node-exercise`)
