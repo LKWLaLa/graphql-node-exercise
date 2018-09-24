@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const schema = require('./schema/rootSchema');
 const seeds = require('./seeds')
 
-mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds111993.mlab.com:11993/graphql-node-exercise`)
+mongoose.connect(process.env.DB_ADDRESS)
 mongoose.connection.once('open', () => {
     console.log('connected to database');
     // seeds.clean()
