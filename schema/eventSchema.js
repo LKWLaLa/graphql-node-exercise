@@ -11,7 +11,7 @@ const {
     GraphQLList
 } = graphql;
 
-const queryFields = { 
+const eventQueryFields = { 
     event: {
         type: EventType,
         args: { id: { type: GraphQLID } },
@@ -52,12 +52,16 @@ const eventMutationFields = {
             description: { type: GraphQLString}
         },
         resolve(parent, args){
+            let updateDetails = {}
+            if(args.name){
+                updateDetails.name = args.name
+            }
+            if(args.description){
+                updateDetails.description = args.description
+            }
             return Event.findByIdAndUpdate(
                 args.id,
-                {$set:{
-                    name:args.name,
-                    description:args.description
-                }},
+                {$set: updateDetails},
                 {new:true}
             )       
         }
@@ -76,6 +80,6 @@ const eventMutationFields = {
 
 
 module.exports = {
-    eventQueryFields: queryFields,
+    eventQueryFields: eventQueryFields,
     eventMutationFields: eventMutationFields
 }

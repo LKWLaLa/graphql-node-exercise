@@ -4,7 +4,7 @@ const Location = require('../models/Location')
 const Event = require('../models/Event')
 const { organizationQueryFields, organizationMutationFields } = require('./organizationSchema')
 const { eventQueryFields, eventMutationFields } = require('./eventSchema')
-const { locationQueryFields } = require('./locationSchema')
+const { locationQueryFields, locationMutationFields } = require('./locationSchema')
 
 
 const {
@@ -26,7 +26,8 @@ const Mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: { 
       ...organizationMutationFields,
-      ...eventMutationFields
+      ...eventMutationFields,
+      ...locationMutationFields
     }
 });
 
