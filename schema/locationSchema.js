@@ -11,6 +11,11 @@ const {
     GraphQLList
 } = graphql;
 
+let googleMapsClient = require('@google/maps').createClient({
+  key: process.env.GOOGLE_PLACES_API_KEY,
+  Promise: Promise
+});
+
 const locationQueryFields = { 
     location: {
         type: LocationType,
@@ -36,12 +41,25 @@ const locationMutationFields = {
             organizationId: {type: GraphQLID}
         },
         resolve(parent, args){
-            let location = new Location({
-                name: args.name,
-                address: args.address,
-                organizationId: args.organizationId
-            });
-            return location.save();
+            return googleMapsClient.geocode({
+              address: args.address
+            })
+            .asPromise()
+            .then((response) => {            
+                let lat = response.json.results[0].geometry.location.lat
+                let lng = response.json.results[0].geometry.location.lng
+                let location = new Location({
+                    name: args.name,
+                    address: args.address,
+                    organizationId: args.organizationId,
+                    latitude: lat,
+                    longitude: lng
+                });
+                return location.save();
+            })
+            .catch((err) => {
+                console.log(err);
+            });           
         }
     },
     updateLocation: {

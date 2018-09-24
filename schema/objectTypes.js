@@ -38,6 +38,8 @@ const LocationType = new GraphQLObjectType({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         address: { type: GraphQLString },
+        latitude: { type: GraphQLString },
+        longitude: { type: GraphQLString },
         organizationId: { type: GraphQLID },
         createdAt: { type: GraphQLString },
         updatedAt: { type: GraphQLString },
