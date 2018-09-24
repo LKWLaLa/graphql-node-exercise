@@ -8,7 +8,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } = graphql;
 
 const organizationQueryFields = { 
@@ -31,7 +32,7 @@ const organizationMutationFields = {
     addOrganization: {
         type: OrganizationType,
         args: {
-            name: { type: GraphQLString }
+            name: { type: GraphQLNonNull(GraphQLString) }
         },
         resolve(parent, args){
             let organization = new Organization({
@@ -43,7 +44,7 @@ const organizationMutationFields = {
     updateOrganization: {
         type: OrganizationType,
         args: {
-            id:   { type: GraphQLID  },
+            id:   { type: new GraphQLNonNull(GraphQLID)  },
             name: { type: GraphQLString }
         },
         resolve(parent, args){

@@ -8,7 +8,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } = graphql;
 
 let googleMapsClient = require('@google/maps').createClient({
@@ -32,22 +33,29 @@ const locationQueryFields = {
     }
 }
 
+const googleMapsRequest = (address) => {
+    return googleMapsClient.geocode({
+          address: address
+        })
+        .asPromise()
+        .then((response) => {            
+            return response.json.results[0].geometry.location
+        })
+}
+
 const locationMutationFields = { 
     addLocation: {
         type: LocationType,
         args: {
-            name: { type: GraphQLString },
-            address: { type: GraphQLString},
-            organizationId: {type: GraphQLID}
+            name: { type: new GraphQLNonNull(GraphQLString) },
+            address: { type: new GraphQLNonNull(GraphQLString)},
+            organizationId: {type: new GraphQLNonNull(GraphQLID)}
         },
         resolve(parent, args){
-            return googleMapsClient.geocode({
-              address: args.address
-            })
-            .asPromise()
+            return googleMapsRequest(args.address)
             .then((response) => {            
-                let lat = response.json.results[0].geometry.location.lat
-                let lng = response.json.results[0].geometry.location.lng
+                let lat = response.lat
+                let lng = response.lng
                 let location = new Location({
                     name: args.name,
                     address: args.address,
@@ -65,29 +73,44 @@ const locationMutationFields = {
     updateLocation: {
         type: LocationType,
         args: {
-            id:   { type: GraphQLID  },
+            id:   { type: new GraphQLNonNull(GraphQLID)  },
             name: { type: GraphQLString },
             address: { type: GraphQLString}
         },
         resolve(parent, args){
-            let updateDetails = {}
-            if(args.name){
-                updateDetails.name = args.name
+            if(args.name && !args.address){
+                return Location.findByIdAndUpdate(
+                args.id,
+                {$set: {name: args.name}},
+                {new:true})       
             }
             if(args.address){
+                let updateDetails = {}
                 updateDetails.address = args.address
+                if(args.name){
+                    updateDetails.name = args.name
+                }
+                return googleMapsRequest(args.address)
+                    .then( (response) => {
+                        updateDetails.latitude = response.lat 
+                        updateDetails.longitude = response.lng 
+
+                        return Location.findByIdAndUpdate(
+                            args.id,
+                            {$set: updateDetails},
+                            {new:true}
+                        )     
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
             }
-            return Location.findByIdAndUpdate(
-                args.id,
-                {$set: updateDetails},
-                {new:true}
-            )       
-        }
+        }     
     },
     deleteLocation: {
         type: LocationType,
         args: {
-            id: { type: GraphQLID  }
+            id: { type: new GraphQLNonNull(GraphQLID)  }
         },
         resolve(parent, args){
             return Location.findByIdAndRemove(args.id)       

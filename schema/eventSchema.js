@@ -8,7 +8,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } = graphql;
 
 const eventQueryFields = { 
@@ -34,9 +35,9 @@ const eventMutationFields = {
     addEvent: {
         type: EventType,
         args: {
-            name: { type: GraphQLString },
+            name: { type: new GraphQLNonNull(GraphQLString) },
             description: { type: GraphQLString},
-            organizationId: {type: GraphQLID} ,
+            organizationId: {type: new GraphQLNonNull(GraphQLID)} ,
             dateTime: { type: GraphQLString }
         },
         resolve(parent, args){
@@ -52,7 +53,7 @@ const eventMutationFields = {
     updateEvent: {
         type: EventType,
         args: {
-            id:   { type: GraphQLID  },
+            id:   { type: new GraphQLNonNull(GraphQLID)  },
             name: { type: GraphQLString },
             description: { type: GraphQLString},
             dateTime: { type: GraphQLString }
@@ -78,7 +79,7 @@ const eventMutationFields = {
     deleteEvent: {
         type: EventType,
         args: {
-            id: { type: GraphQLID  }
+            id: { type: new GraphQLNonNull(GraphQLID)  }
         },
         resolve(parent, args){
             return Event.findByIdAndRemove(args.id)       
