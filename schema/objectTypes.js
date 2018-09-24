@@ -58,6 +58,7 @@ const EventType = new GraphQLObjectType({
         organizationId: { type: GraphQLID },
         createdAt: { type: GraphQLString },
         updatedAt: { type: GraphQLString },
+        description: { type: GraphQLString },
         organization: {
             type: OrganizationType,
             resolve(parent, args){
