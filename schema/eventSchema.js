@@ -27,19 +27,24 @@ const eventQueryFields = {
     }
 }
 
+// for addEvent - dateTime must be entered in ISO 8601 format.
+//example: "2018-09-23T12:30"
+
 const eventMutationFields = { 
     addEvent: {
         type: EventType,
         args: {
             name: { type: GraphQLString },
             description: { type: GraphQLString},
-            organizationId: {type: GraphQLID}
+            organizationId: {type: GraphQLID} ,
+            dateTime: { type: GraphQLString }
         },
         resolve(parent, args){
             let event = new Event({
                 name: args.name,
                 description: args.description,
-                organizationId: args.organizationId
+                organizationId: args.organizationId,
+                dateTime: new Date(args.dateTime)
             });
             return event.save();
         }
@@ -49,7 +54,8 @@ const eventMutationFields = {
         args: {
             id:   { type: GraphQLID  },
             name: { type: GraphQLString },
-            description: { type: GraphQLString}
+            description: { type: GraphQLString},
+            dateTime: { type: GraphQLString }
         },
         resolve(parent, args){
             let updateDetails = {}
@@ -58,6 +64,9 @@ const eventMutationFields = {
             }
             if(args.description){
                 updateDetails.description = args.description
+            }
+            if(args.dateTime){
+                updateDetails.dateTime = new Date(args.dateTime)
             }
             return Event.findByIdAndUpdate(
                 args.id,

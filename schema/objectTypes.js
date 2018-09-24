@@ -61,6 +61,13 @@ const EventType = new GraphQLObjectType({
         createdAt: { type: GraphQLString },
         updatedAt: { type: GraphQLString },
         description: { type: GraphQLString },
+        dateTime: { 
+            type: GraphQLString,
+            resolve(parent, args){
+                return Event.findById(parent.id)
+                .then(res => res.dateTime.toLocaleString())
+            } 
+        },
         organization: {
             type: OrganizationType,
             resolve(parent, args){
