@@ -11,7 +11,7 @@ const {
     GraphQLList
 } = graphql;
 
-const queryFields = { 
+const organizationQueryFields = { 
     organization: {
         type: OrganizationType,
         args: { id: { type: GraphQLID } },
@@ -27,8 +27,47 @@ const queryFields = {
     }
 }
 
+const organizationMutationFields = { 
+    addOrganization: {
+        type: OrganizationType,
+        args: {
+            name: { type: GraphQLString }
+        },
+        resolve(parent, args){
+            let organization = new Organization({
+                name: args.name
+            });
+            return organization.save();
+        }
+    },
+    updateOrganization: {
+        type: OrganizationType,
+        args: {
+            id:   { type: GraphQLID  },
+            name: { type: GraphQLString }
+        },
+        resolve(parent, args){
+            return Organization.findByIdAndUpdate(
+                args.id,
+                {$set:{name:args.name}},
+                {new:true}
+            )       
+        }
+    },
+    deleteOrganization: {
+        type: OrganizationType,
+        args: {
+            id:   { type: GraphQLID  }
+        },
+        resolve(parent, args){
+            return Organization.findByIdAndRemove(args.id)       
+        }
+    }
+
+}
+
 
 module.exports = {
-    organizationQueryFields: queryFields,
-    OrganizationType: OrganizationType
+    organizationQueryFields: organizationQueryFields,
+    organizationMutationFields: organizationMutationFields
 }
