@@ -4,13 +4,10 @@ const app = express();
 const graphqlHTTP = require('express-graphql');
 const mongoose = require('mongoose');
 const schema = require('./schema/rootSchema');
-const seeds = require('./seeds')
 
 mongoose.connect(process.env.DB_ADDRESS)
 mongoose.connection.once('open', () => {
-    console.log('connected to database');
-    // seeds.clean()
-    // seeds.populate()
+  console.log('connected to database');   
 });
 
 app.use('/graphql', graphqlHTTP({

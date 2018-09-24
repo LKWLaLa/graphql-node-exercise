@@ -53,17 +53,7 @@ const organizationMutationFields = {
                 {new:true}
             )       
         }
-    },
-    deleteOrganization: {
-        type: OrganizationType,
-        args: {
-            id:   { type: GraphQLID  }
-        },
-        resolve(parent, args){
-            return Organization.findByIdAndRemove(args.id)       
-        }
     }
-
 }
 
 
