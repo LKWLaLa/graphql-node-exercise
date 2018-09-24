@@ -33,3 +33,10 @@
  - Start the app with `node app.js`.  (You can alternatively run it with [nodemon](https://github.com/remy/nodemon) for automatic server restarts.) 
  - Navigate to `localhost:3000/graphql` to open the GraphiQL GUI in your browser.
 
+###  Etc:
+
+- When adding a new location, the `latitude` and `longitude` fields will be automatically populated by Google's geocode API.  This functionality is only available on the create action, and has not yet been added to the update action.
+
+- When adding a new event, the `dateTime` field should be given a value that is an acceptable ISO 8601 format.  For example, "2018-09-23T12:30" would work.
+
+
