@@ -27,7 +27,7 @@
 ### Directions to run:
 
  - Fork or clone this repo, then cd in the directory on your local machine. 
- - Create a `.env` file to add your mLab and Google Maps API keys.
+ - Create a `.env` file to add your mLab and Google Maps API keys. They should be named `DB_ADDRESS` and `GOOGLE_PLACES_API_KEY`, respectively.
  - Run `yarn install` to install node modules.
  - Run the seed file with `node seeds.js`.
  - Start the app with `node app.js`.  (You can alternatively run it with [nodemon](https://github.com/remy/nodemon) for automatic server restarts.) 
