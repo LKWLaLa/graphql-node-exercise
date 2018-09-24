@@ -4,11 +4,11 @@
 
 ### Dependencies:
 
-- This project is built with node `v9.11.1`, express, and graphQL. 
+- This project is built with node `v9.11.1`, express, mongoDB and graphQL. 
 
 - [Yarn](https://yarnpkg.com/en/) is used for package management.  
 
-- If you do not already have one, create an [mLab account](https://mlab.com/home). Create a new database, and user for that database. Your personal db connection string,located at the top of the page, will look like this:  `mongodb://<dbuser>:<dbpassword>@dsxxxxxx.mlab.com:xxxx/<dbname>`. 
+- If you do not already have one, create an [mLab account](https://mlab.com/home). Create a new database, and user for that database. Your personal db connection string, located at the top of the page, will look like this:  `mongodb://<dbuser>:<dbpassword>@dsxxxxxx.mlab.com:xxxx/<dbname>`. 
 
 - You will also need a Google Maps API key, for access to Google's geocoding API.  To do so:
 
