@@ -8,7 +8,7 @@
 
 - [Yarn](https://yarnpkg.com/en/) is used for package management.  
 
-- If you do not already have one, create an [mLab account](https://mlab.com/home) for access to the MongoDB database.  
+- If you do not already have one, create an [mLab account](https://mlab.com/home) for access to the MongoDB database. Create a new database, and user for that database. Your personal db connection string, will be located at the top of the page, and will look like this:  `mongodb://<dbuser>:<dbpassword>@dsxxxxxx.mlab.com:xxxx/<dbname>`. 
 
 - You will also need a Google Maps API key, for access to Google's geocoding API.  To do so:
 
@@ -27,7 +27,7 @@
 ### Directions to run:
 
  - Fork or clone this repo, then cd in the directory on your local machine. 
- - Create a `.env` file to add your mLab and Google Maps API keys. They should be named `DB_ADDRESS` and `GOOGLE_PLACES_API_KEY`, respectively.
+ - Create a `.env` file to add your mLab database connection string and Google Maps API key. They should be named `DB_ADDRESS` and `GOOGLE_PLACES_API_KEY`, respectively.
  - Run `yarn install` to install node modules.
  - Run the seed file with `node seeds.js`.
  - Start the app with `node app.js`.  (You can alternatively run it with [nodemon](https://github.com/remy/nodemon) for automatic server restarts.) 
